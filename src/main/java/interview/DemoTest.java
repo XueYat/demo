@@ -1,11 +1,12 @@
 package interview;
 
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.junit.Test;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,45 @@ public class DemoTest {
     @Test
     public void test() {
         System.out.println(Math.floor(1.9));
+    }
+
+    @Test
+    public void jdk14() {
+        LocalDate jdk14 = LocalDate.of(2020, 3, 17);
+        LocalDate nowDate = LocalDate.now();
+        System.out.println("距离JDK 14 发布还有：" + nowDate.until(jdk14, ChronoUnit.DAYS) + "天");
+    }
+
+    interface lambda {
+        int sum(int a, int b);
+    }
+
+    @FunctionalInterface
+    interface functionLambda {
+        void say(String name, int age);
+    }
+
+    @Test
+    public void lambdaTest() {
+        lambda lambda = Integer::sum;
+        System.out.println(lambda.sum(1, 2));
+
+        functionLambda functionLambda = (String name, int age) -> System.out.println("我叫" + name + "，今年" + age + "岁");
+        functionLambda.say("张三", 21);
+
+        Runnable runnable1 = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("使用lambda之前启动线程");
+            }
+        };
+        new Thread(runnable1).start();
+
+        Runnable runnable2 = () -> System.out.println("使用lambda之后启动线程");
+        new Thread(runnable2).start();
+
+        new Thread(() -> System.out.println("简洁lambda之后启动线程")).start();
+
     }
 
     @Test
